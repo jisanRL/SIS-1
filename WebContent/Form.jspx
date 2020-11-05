@@ -47,7 +47,7 @@
 			
 			<tr>
 			<td>
-					<p>the output goes herer</p>
+					
 					<p>There are ${numberofresults} entries.</p>
 					<BR /> 
 					
