@@ -1,21 +1,26 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
-	<jsp:directive.page contentType="text/html; charset=UTF-8" 
-		pageEncoding="UTF-8" session="false"/>
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<jsp:root xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:f="http://java.sun.com/jsp/jstl/fmt" version="2.0">
+	<jsp:directive.page contentType="text/html; charset=ISO-8859-1"
+		pageEncoding="ISO-8859-1" session="true" />
 	<jsp:output doctype-root-element="html"
 		doctype-public="-//W3C//DTD XHTML 1.0 Transitional//EN"
 		doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"
 		omit-xml-declaration="true" />
-<html xmlns="http://www.w3.org/1999/xhtml">
+	<html xmlns="http://www.w3.org/1999/xhtml">
+	
 <head>
 <title>Student Information System</title>
 </head>
+
 <body>
-	<FORM action="test" method="post">
+	<FORM action="sis" method="GET">
 		<FIELDSET>
 		<legend>
 				<label for="legend">Student Information System </label>
 		</legend>
+		
 		<TABLE>
 			<tr>
 				<td>
@@ -46,37 +51,41 @@
 			</tr>
 			
 			<tr>
-			<td>
-					
-					<p>There are ${numberofresults} entries.</p>
-					<BR /> 
-					
-					<TABLE>
-						<tr>
-							<th>ID</th>
-							<th>Name</th>
-							<th>Credits Taken</th>
-							<th>Credits to graduate</th>
-						</tr>
-						
-						
-						<tr>
-							<td>${sid}</td>
-							<td>${name}</td>
-							<td>${creditTaken}</td>
-							<td>${creditGrad}</td>
-						</tr>
-						
-						
-							
-					</TABLE>
-			</td>
-			</tr>
-	
+					<td><c:choose>
+							<c:when test="${requestScope['errorValue'] eq 1}">
+								<span><font color="red">There was an internal
+										error or the result is empty!</font></span>
+							</c:when>
+							<c:otherwise>
+								<c:choose>
+									<c:when test="${requestScope['numberofresults'] gt -1}">
+								There are ${requestScope['numberofresults']} entries.<br />
+										<TABLE>
+											<TR>
+												<TH>Id |</TH>
+												<TH>Name |</TH>
+												<TH>Credit Taken |</TH>
+												<TH>Credits to graduate</TH>
+											</TR>
+										</TABLE>
+										<c:forEach items="${requestScope['resultMap']}" var="key">
+											<TR>
+												<TD><c:out value="${key.sid}" />|</TD>
+												<TD><c:out value="${key.name}" />|</TD>
+												<TD><c:out value="${key.creditTaken}" />|</TD>
+												<TD><c:out value="${key.creditGrad}" /></TD>
+											</TR>
+										</c:forEach>
+									</c:when>
+									<c:otherwise>
+									</c:otherwise>
+								</c:choose>
+							</c:otherwise>
+						</c:choose></td>
+				</tr>
 		</TABLE>
 		</FIELDSET>
 	</FORM>
-	
 	
 </body>
 </html>

@@ -58,8 +58,8 @@ public class Sis extends HttpServlet {
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 		
 		List<StudentBean> res = new ArrayList<>();
-		
 		Map<String, StudentBean> tr = new HashMap<String, StudentBean>();
+		
 		int ep = 0;
 		int numberofresults = 0;
 		
@@ -69,8 +69,8 @@ public class Sis extends HttpServlet {
 		if (reportButton != null) {
 			String prefix = request.getParameter("prefix");					// name
 			String creditTaken = request.getParameter("creditTaken");		// miniumum credit taken
-		
-			if (prefix == null && creditTaken == null) {			// check this part 
+			
+			if (!emptyNullChecker(prefix) && !emptyNullChecker(creditTaken)) {			// check this part 
 				try {
 					sisModel = (SIS) getServletContext().getAttribute("sis");
 					tr = sisModel.retriveStudent(prefix, creditTaken);
@@ -81,7 +81,9 @@ public class Sis extends HttpServlet {
 					}
 					
 					numberofresults = tr.size();
+					request.setAttribute("numberofresults", numberofresults);
 					request.setAttribute("resultMap", res.toArray());
+				
 				} catch (Exception e) {
 					// TODO: handle exception
 					ep = 1;
@@ -102,6 +104,13 @@ public class Sis extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
+	}
+	
+	private boolean emptyNullChecker(String input) {
+		if (input.isEmpty() || input == null) {
+			return true;
+		}
+		return false;
 	}
 
 }
