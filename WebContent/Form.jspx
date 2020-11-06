@@ -58,12 +58,17 @@
 							<th>Credits Taken</th>
 							<th>Credits to graduate</th>
 						</tr>
-							<tr>
-								<td>${sid}</td>
-								<td>${name}</td>
-								<td>${creditTaken}</td>
-								<td>${creditGrad}</td>
-							</tr>
+						
+						
+						<tr>
+							<td>${sid}</td>
+							<td>${name}</td>
+							<td>${creditTaken}</td>
+							<td>${creditGrad}</td>
+						</tr>
+						
+						
+							
 					</TABLE>
 			</td>
 			</tr>
