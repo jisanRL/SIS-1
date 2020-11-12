@@ -1,6 +1,7 @@
 package ctrl;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -16,8 +17,10 @@ import model.SIS;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 /**
  * Servlet implementation class Test
@@ -60,10 +63,10 @@ public class Sis extends HttpServlet {
 		Map<String, StudentBean> tr = new HashMap<String, StudentBean>();	
 		int ep = 0;
 		int numberOfResults = 0;
+		String regExp = "^[^<>{}\"/|;:.,~!?@#$%^=&*\\]\\\\()\\[¿§«»ω⊙¤°℃℉€¥£¢¡®©0-9_+]*$";
 		
 		// check if u clicked on Report
 		String reportButton = request.getParameter("report");		// button clicked
-
 		if (reportButton != null) {
 
 			String prefix = request.getParameter("prefix");
@@ -89,10 +92,15 @@ public class Sis extends HttpServlet {
 				} catch (Exception e) { 
 					ep = 1;
 					request.setAttribute("errorValue", ep);
-				}
-			} else { // if fields are empty
+				} 
+				
+			} else if(prefix == regExp && creditTaken == regExp) {
 				ep = 1;
 				request.setAttribute("errorValue", ep);
+			}
+			else { // if fields are empty
+					ep = 1;
+					request.setAttribute("errorValue", ep);
 			}
 			System.out.println("name = " +  prefix);
 			System.out.println("resultmap=" + res);
